@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react"
 
 type AuthContextType = {
-  isAuth: boolean
+  isAuthenticated: boolean
   login: () => void
   logout: () => void
 }
@@ -10,28 +10,28 @@ const AuthContext = createContext<AuthContextType | null>(null)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
 
-  const [isAuth, setIsAuth] = useState<boolean>(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
-  // Load auth state from storage
+  // Load auth from localStorage
   useEffect(() => {
     const savedAuth = localStorage.getItem("auth")
     if (savedAuth === "true") {
-      setIsAuth(true)
+      setIsAuthenticated(true)
     }
   }, [])
 
   const login = () => {
-    setIsAuth(true)
+    setIsAuthenticated(true)
     localStorage.setItem("auth", "true")
   }
 
   const logout = () => {
-    setIsAuth(false)
+    setIsAuthenticated(false)
     localStorage.removeItem("auth")
   }
 
   return (
-    <AuthContext.Provider value={{ isAuth, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
       {children}
     </AuthContext.Provider>
   )
@@ -39,6 +39,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
 export function useAuth() {
   const context = useContext(AuthContext)
-  if (!context) throw new Error("useAuth must be used inside AuthProvider")
+  if (!context) {
+    throw new Error("useAuth must be used inside AuthProvider")
+  }
   return context
 }
