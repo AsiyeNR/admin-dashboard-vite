@@ -55,3 +55,88 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 
 npm run build fails to minify
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+=======
+\# 🚀 Admin Dashboard Framework (Vite + React)
+
+
+
+Modern, responsive ve production-ready admin dashboard template.
+
+
+
+Bu proje SaaS admin panelleri, backoffice sistemleri ve yönetim arayüzleri için geliştirilmiştir.
+
+
+
+---
+
+
+
+\## ✨ Features
+
+
+
+✅ JWT Authentication  
+
+✅ Protected Routes  
+
+✅ Responsive Sidebar (Mobile + Desktop)  
+
+✅ Dark / Light Theme Switch  
+
+✅ Skeleton Loading UI  
+
+✅ Live Socket Dashboard Updates  
+
+✅ Chart.js Analytics  
+
+✅ Modern UI Animations  
+
+✅ Clean Architecture  
+
+
+
+---
+
+
+
+\## 🖥 Tech Stack
+
+
+
+\- React (Vite)
+
+\- React Router
+
+\- Context API
+
+\- Chart.js
+
+\- Socket.io
+
+\- Axios
+
+
+
+---
+
+
+
+\## ⚙ Installation
+
+
+
+\### Clone repository
+
+
+
+```bash
+
+git clone https://github.com/AsiyeNR/admin-dashboard-vite.git
+
+
+
+
+
+
+ (Configure production backend URL)

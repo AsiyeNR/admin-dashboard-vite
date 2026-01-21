@@ -108,9 +108,7 @@ export default function Dashboard() {
     fetchData()
 
     // SOCKET
-    const socket = io("http://localhost:5000", {
-    transports: ["websocket"]
-})
+  const socket = io("https://admin-dashboard-vite-t14x.onrender.com.onrender.com")
 
 
     socket.on("chartUpdate", (liveData) => {
