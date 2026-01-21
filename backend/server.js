@@ -17,16 +17,18 @@ const server = http.createServer(app)
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "*",
     methods: ["GET", "POST"]
   }
 })
+
 
 // =======================
 // MIDDLEWARES
 // =======================
 
-app.use(cors())
+app.use(cors({ origin: "*" }))
+
 app.use(express.json())
 
 // =======================
