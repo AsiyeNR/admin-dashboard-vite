@@ -1,24 +1,18 @@
 import { useState, useContext } from "react"
 import { AuthContext } from "../context/AuthContext"
+import { useNavigate } from "react-router-dom"
 import api from "../api/axios"
 
 export default function Login() {
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [loading, setLoading] = useState(false)
 
   const { login } = useContext(AuthContext)
+  const navigate = useNavigate()
 
+  // NORMAL LOGIN
   const handleLogin = async () => {
-
-    if (!email || !password) {
-      alert("Fill all fields")
-      return
-    }
-
-    setLoading(true)
-
     try {
 
       const res = await api.post("/api/auth/login", {
@@ -26,20 +20,31 @@ export default function Login() {
         password
       })
 
-      // SAVE TOKENS
       login(res.data.accessToken, res.data.refreshToken)
 
-      // HARD REDIRECT (SAFE)
-      window.location.href = "/admin"
+      navigate("/admin/dashboard")
 
-    } catch (err) {
-
-      console.log(err)
+    } catch {
       alert("Login failed")
-
     }
+  }
 
-    setLoading(false)
+  // DEMO LOGIN
+  const handleDemoLogin = async () => {
+    try {
+
+      const res = await api.post("/api/auth/login", {
+        email: "admin@test.com",
+        password: "123456"
+      })
+
+      login(res.data.accessToken, res.data.refreshToken)
+
+      navigate("/admin/dashboard")
+
+    } catch {
+      alert("Demo login failed")
+    }
   }
 
   return (
@@ -56,28 +61,46 @@ export default function Login() {
 
       <div
         style={{
-          background: "#1e293b",
-          padding: "40px",
+          background: "#111827",
+          padding: "30px",
           borderRadius: "12px",
           width: "320px",
-          color: "white",
-          boxShadow: "0 10px 30px rgba(0,0,0,0.4)"
+          color: "#fff",
+          boxShadow: "0 10px 30px rgba(0,0,0,0.5)"
         }}
       >
 
-        <h2 style={{ textAlign: "center" }}>Admin Login</h2>
+        {/* DEMO BADGE */}
+        <div
+          style={{
+            background: "#1f2937",
+            color: "#4fc3f7",
+            padding: "6px 12px",
+            borderRadius: "8px",
+            display: "inline-block",
+            marginBottom: "12px",
+            fontWeight: "bold",
+            fontSize: "12px"
+          }}
+        >
+          DEMO MODE ENABLED
+        </div>
+
+        <h2 style={{ marginBottom: "20px" }}>
+          Admin Login
+        </h2>
 
         <input
-          type="email"
           placeholder="Email"
           value={email}
           onChange={e => setEmail(e.target.value)}
           style={{
             width: "100%",
             padding: "10px",
-            marginTop: "20px",
+            marginBottom: "12px",
             borderRadius: "6px",
-            border: "none"
+            border: "none",
+            outline: "none"
           }}
         />
 
@@ -89,30 +112,44 @@ export default function Login() {
           style={{
             width: "100%",
             padding: "10px",
-            marginTop: "15px",
+            marginBottom: "12px",
             borderRadius: "6px",
-            border: "none"
+            border: "none",
+            outline: "none"
           }}
         />
 
+        {/* NORMAL LOGIN */}
         <button
           onClick={handleLogin}
-          disabled={loading}
           style={{
             width: "100%",
-            padding: "12px",
-            marginTop: "20px",
-            borderRadius: "6px",
+            padding: "10px",
+            background: "#4fc3f7",
             border: "none",
-            background: "#2563eb",
-            color: "white",
-            cursor: "pointer",
-            fontWeight: "bold"
+            borderRadius: "6px",
+            fontWeight: "bold",
+            cursor: "pointer"
           }}
         >
+          Login
+        </button>
 
-          {loading ? "Logging in..." : "Login"}
-
+        {/* DEMO LOGIN */}
+        <button
+          onClick={handleDemoLogin}
+          style={{
+            marginTop: "12px",
+            width: "100%",
+            padding: "10px",
+            background: "#ff9800",
+            border: "none",
+            borderRadius: "6px",
+            fontWeight: "bold",
+            cursor: "pointer"
+          }}
+        >
+          🚀 Demo Login (Instant Access)
         </button>
 
       </div>
@@ -120,3 +157,4 @@ export default function Login() {
     </div>
   )
 }
+
